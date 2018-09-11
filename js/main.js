@@ -10,7 +10,7 @@ const canvas = document.getElementById("canvas");
 const photos = document.getElementById("photos");
 const photoButton = document.getElementById("photo-button");
 const clearButton = document.getElementById("clear-button");
-const photoFilte = document.getElementById("photo-filter");
+const photoFilter = document.getElementById("photo-filter");
 
 // Get media stream
 
@@ -41,12 +41,36 @@ video.addEventListener('canplay', function (e) {
 
 }, false);
 
+//PHOTO BUTTON EVENT
 photoButton.addEventListener('click', function (e) {
     takePicture();
 
     e.preventDefault();
 }, false);
 
+//FILTER EVENT
+photoFilter.addEventListener('change', function (e) {
+    //set filter to chosen option
+    filter = e.target.value;
+    //set filter to video
+    video.style.filter = filter;
+    e.preventDefault();
+}, false);
+
+//Clear event
+clearButton.addEventListener('click', function (e) {
+    //clear photos
+    photos.innerHTML = '';
+    //change filter back to none
+    filter = 'none';
+    //set video filter
+    video.style.filter = filter;
+    //reset select list
+    photoFilter.selectedIndex = 0;
+
+})
+
+//TAKE PICTURE 
 function takePicture() {
     //Create canvas
     const context = canvas.getContext('2d');
@@ -65,6 +89,9 @@ function takePicture() {
 
         //Set img src
         img.setAttribute('src', imgurl);
+
+        //Set image filter
+        img.style.filter = filter;
 
         //Add image to photos
         photos.appendChild(img)
