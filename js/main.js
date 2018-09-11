@@ -40,3 +40,34 @@ video.addEventListener('canplay', function (e) {
     streaming = true;
 
 }, false);
+
+photoButton.addEventListener('click', function (e) {
+    takePicture();
+
+    e.preventDefault();
+}, false);
+
+function takePicture() {
+    //Create canvas
+    const context = canvas.getContext('2d');
+    if (width && height) {
+        //set canvas props
+        canvas.width = width;
+        canvas.height = height;
+        //Draw an image of the video on the canvas
+        context.drawImage(video, 0, 0, width, height);
+
+        //Create imge from canvas
+        const imgurl = canvas.toDataURL("image/png");
+
+        //Create img element
+        const img = document.createElement('img');
+
+        //Set img src
+        img.setAttribute('src', imgurl);
+
+        //Add image to photos
+        photos.appendChild(img)
+
+    }
+}
